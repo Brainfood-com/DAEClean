@@ -185,7 +185,10 @@ def clean_DAE(self, context):
         if b_limd:
             bpy.ops.mesh.dissolve_limited()
         # UV Unwrap
-        bpy.ops.uv.smart_project()
+        try:
+            bpy.ops.uv.smart_project()
+        except:
+            self.report({"INFO"}, "bpy.ops.uv.smart_project failed for: %s" % (obj.name))
         new_verts += len(obj.data.vertices)
         bpy.ops.object.mode_set(mode="OBJECT")
         obj.select_set(False)
